@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brozentoRed: #c40000;
+  --color-brozentoDark: #1a1a1a;
+  --color-brozentoGold: #d4af37;
+}
+@import "tailwindcss";
+
+@theme {
+  --color-brozentoRed: #c40000;
+  --color-brozentoDark: #1a1a1a;
+  --color-brozentoGold: #d4af37;
+}
+
+/* Marquee Animation */
+.marquee-container {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.marquee-text {
+  display: inline-block;
+  padding-left: 100%;
+  animation: marquee 20s linear infinite;
+}
+
+@keyframes marquee {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-100%, 0); }
+}
