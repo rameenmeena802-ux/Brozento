@@ -1,14 +1,43 @@
-const dns = require('dns');
-dns.setServers(['8.8.8.8', '8.8.4.4']);
+
 const mongoose = require('mongoose');
+
+let cached = global.mongoose;
+
+if (!cached) {
+  cached = global.mongoose = {
+    conn: null,
+    promise: null
+  };
+}
 
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.MONGODB_URI);
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
+    if (cached.conn && mongoose.connection.readyState === 1) {
+      return cached.conn;
+    }
+
+    if (!process.env.MONGODB_URI) {
+      throw new Error('MONGODB_URI is missing in environment variables');
+    }
+
+    if (!cached.promise) {
+      cached.promise = mongoose.connect(process.env.MONGODB_URI, {
+        serverSelectionTimeoutMS: 10000
+      });
+    }
+
+    cached.conn = await cached.promise;
+
+    console.log('MongoDB Connected:', mongoose.connection.host);
+
+    return cached.conn;
+
   } catch (error) {
-    console.error(`Error: ${error.message}`);
-    process.exit(1);
+    cached.promise = null;
+    cached.conn = null;
+
+    console.error('MongoDB Connection Error:', error.message);
+    throw error;
   }
 };
 
