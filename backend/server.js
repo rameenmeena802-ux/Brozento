@@ -60,3 +60,4 @@ if (require.main === module) {
     console.log(`Brozento server running on port ${PORT}`);
   });
 }
+// Redeploy trigger - MongoDB IP updated
