@@ -1,4 +1,3 @@
-
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
@@ -47,18 +46,16 @@ app.get('/', (req, res) => {
   });
 });
 
+// Database connect karein (Vercel par bhi chalega)
+connectDB().catch(err => console.error('DB Connection Failed:', err.message));
+
 // Export Express app for deployment
 module.exports = app;
 
 // Local development server
 if (require.main === module) {
-  connectDB();
-
   const PORT = process.env.PORT || 5000;
-
   app.listen(PORT, () => {
     console.log(`Brozento server running on port ${PORT}`);
   });
 }
-// Redeploy trigger - MongoDB IP updated
-// Trigger redeploy after MongoDB IP fix
