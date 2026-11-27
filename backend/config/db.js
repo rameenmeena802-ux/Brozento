@@ -1,7 +1,3 @@
-
-const dns = require('dns');
-dns.setServers(['8.8.8.8', '8.8.4.4']);
-
 const mongoose = require('mongoose');
 
 let cached = global.mongoose;
@@ -19,13 +15,16 @@ const connectDB = async () => {
       return cached.conn;
     }
 
-    if (!process.env.MONGODB_URI) {
+    const MONGO_URI = process.env.MONGODB_URI || process.env.MONGO_URI;
+
+    if (!MONGO_URI) {
       throw new Error('MONGODB_URI is missing in environment variables');
     }
 
     if (!cached.promise) {
-      cached.promise = mongoose.connect(process.env.MONGODB_URI, {
-        serverSelectionTimeoutMS: 15000
+      cached.promise = mongoose.connect(MONGO_URI, {
+        serverSelectionTimeoutMS: 5000,
+        bufferCommands: false,
       });
     }
 
