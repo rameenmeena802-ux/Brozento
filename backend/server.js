@@ -1,3 +1,4 @@
+
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
@@ -6,7 +7,6 @@ dotenv.config();
 
 const connectDB = require('./config/db');
 
-// Import all routes
 const productRoutes = require('./routes/productRoutes');
 const settingsRoutes = require('./routes/settingsRoutes');
 const authRoutes = require('./routes/authRoutes');
@@ -21,9 +21,22 @@ const analyticsRoutes = require('./routes/analyticsRoutes');
 
 const app = express();
 
-// Middleware
 app.use(cors());
 app.use(express.json());
+
+// Database connection before handling requests
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (error) {
+    console.error('Database connection failed:', error.message);
+    res.status(500).json({
+      success: false,
+      message: 'Database connection failed'
+    });
+  }
+});
 
 // API routes
 app.use('/api/products', productRoutes);
@@ -38,7 +51,6 @@ app.use('/api/contact', contactRoutes);
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/analytics', analyticsRoutes);
 
-// Home route
 app.get('/', (req, res) => {
   res.json({
     success: true,
@@ -46,15 +58,12 @@ app.get('/', (req, res) => {
   });
 });
 
-// Database connect karein (Vercel par bhi chalega)
-connectDB().catch(err => console.error('DB Connection Failed:', err.message));
-
-// Export Express app for deployment
 module.exports = app;
 
-// Local development server
+// Local development
 if (require.main === module) {
   const PORT = process.env.PORT || 5000;
+
   app.listen(PORT, () => {
     console.log(`Brozento server running on port ${PORT}`);
   });
