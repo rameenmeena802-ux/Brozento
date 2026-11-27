@@ -1,5 +1,7 @@
+
 const dns = require('dns');
 dns.setServers(['8.8.8.8', '8.8.4.4']);
+
 const mongoose = require('mongoose');
 
 let cached = global.mongoose;
@@ -23,7 +25,7 @@ const connectDB = async () => {
 
     if (!cached.promise) {
       cached.promise = mongoose.connect(process.env.MONGODB_URI, {
-        serverSelectionTimeoutMS: 10000
+        serverSelectionTimeoutMS: 15000
       });
     }
 
