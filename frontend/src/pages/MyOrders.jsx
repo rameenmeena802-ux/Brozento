@@ -24,7 +24,8 @@ const MyOrders = () => {
       // Yahan hum user ke phone number se orders fetch kar rahe hain
       // Lekin user ke paas abhi phone number nahi hai, isliye hum email use karenge
       // Filhal hum saare orders fetch kar rahe hain, baad mein filter karenge
-      const res = await fetch(`http://localhost:5000/api/orders`);
+      const res = await fetch(`https://brozento-backend.vercel.app
+ Copy new URL/api/orders`);
       const data = await res.json();
       setOrders(data);
       setLoading(false);

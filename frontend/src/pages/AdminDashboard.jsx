@@ -4,7 +4,7 @@ import { LogOut, PlusCircle, Edit, Trash2, X, ShoppingBag, Package, Truck, Setti
 
 const AdminDashboard = () => {
   // Default tab ab 'dashboard' hai
-  const [activeTab, setActiveTab] = useState('dashboard'); 
+  const [activeTab, setActiveTab] = useState('dashboard');
 
   // Dashboard Stats State
   const [stats, setStats] = useState({
@@ -82,7 +82,7 @@ const AdminDashboard = () => {
     if (!token) {
       navigate('/admin');
     } else {
-      fetchStats(); // Stats fetch karein
+      fetchStats();
       fetchProducts();
       fetchOrders();
       fetchCities();
@@ -96,7 +96,7 @@ const AdminDashboard = () => {
 
   const fetchStats = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/analytics');
+      const res = await fetch('https://brozento-backend.vercel.app/api/analytics');
       const data = await res.json();
       setStats(data);
     } catch (error) {
@@ -106,7 +106,7 @@ const AdminDashboard = () => {
 
   const fetchProducts = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/products');
+      const res = await fetch('https://brozento-backend.vercel.app/api/products');
       const data = await res.json();
       setProducts(data);
       setLoading(false);
@@ -117,7 +117,7 @@ const AdminDashboard = () => {
 
   const fetchOrders = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/orders');
+      const res = await fetch('https://brozento-backend.vercel.app/api/orders');
       const data = await res.json();
       setOrders(data);
       setOrdersLoading(false);
@@ -128,7 +128,7 @@ const AdminDashboard = () => {
 
   const fetchCities = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/cities');
+      const res = await fetch('https://brozento-backend.vercel.app/api/cities');
       const data = await res.json();
       setCities(data);
     } catch (error) {
@@ -138,7 +138,7 @@ const AdminDashboard = () => {
 
   const fetchCategories = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/categories');
+      const res = await fetch('https://brozento-backend.vercel.app/api/categories');
       const data = await res.json();
       setCategories(data);
     } catch (error) {
@@ -148,7 +148,7 @@ const AdminDashboard = () => {
 
   const fetchPages = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/pages');
+      const res = await fetch('https://brozento-backend.vercel.app/api/pages');
       const data = await res.json();
       setPages(data);
     } catch (error) {
@@ -158,7 +158,7 @@ const AdminDashboard = () => {
 
   const fetchMessages = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/contact');
+      const res = await fetch('https://brozento-backend.vercel.app/api/contact');
       const data = await res.json();
       setMessages(data);
       setMessagesLoading(false);
@@ -169,7 +169,7 @@ const AdminDashboard = () => {
 
   const fetchReviews = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/reviews');
+      const res = await fetch('https://brozento-backend.vercel.app/api/reviews');
       const data = await res.json();
       setReviews(data);
       setReviewsLoading(false);
@@ -180,7 +180,7 @@ const AdminDashboard = () => {
 
   const fetchSettings = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/settings');
+      const res = await fetch('https://brozento-backend.vercel.app/api/settings');
       const data = await res.json();
       setSiteSettings(data);
     } catch (error) {
@@ -199,7 +199,7 @@ const AdminDashboard = () => {
     formData.append('image', file);
     setUploading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/upload', {
+      const res = await fetch('https://brozento-backend.vercel.app/api/upload', {
         method: 'POST',
         body: formData,
       });
@@ -255,7 +255,7 @@ const AdminDashboard = () => {
     };
 
     try {
-      const url = isEditing ? `http://localhost:5000/api/products/${editId}` : 'http://localhost:5000/api/products';
+      const url = isEditing ? `https://brozento-backend.vercel.app/api/products/${editId}` : 'https://brozento-backend.vercel.app/api/products';
       const method = isEditing ? 'PUT' : 'POST';
 
       const res = await fetch(url, {
@@ -277,7 +277,7 @@ const AdminDashboard = () => {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this product?")) {
       try {
-        await fetch(`http://localhost:5000/api/products/${id}`, { method: 'DELETE' });
+        await fetch(`https://brozento-backend.vercel.app/api/products/${id}`, { method: 'DELETE' });
         fetchProducts();
       } catch (error) {
         console.error(error);
@@ -299,7 +299,7 @@ const AdminDashboard = () => {
 
   const updateOrderStatus = async (orderId, newStatus) => {
     try {
-      await fetch(`http://localhost:5000/api/orders/${orderId}/status`, {
+      await fetch(`https://brozento-backend.vercel.app/api/orders/${orderId}/status`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: newStatus }),
@@ -313,7 +313,7 @@ const AdminDashboard = () => {
   const handleAddCity = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:5000/api/cities', {
+      const res = await fetch('https://brozento-backend.vercel.app/api/cities', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ cityName, deliveryCharge: Number(deliveryCharge) }),
@@ -335,7 +335,7 @@ const AdminDashboard = () => {
 
   const handleDeleteCity = async (id) => {
     if (window.confirm("Delete this city?")) {
-      await fetch(`http://localhost:5000/api/cities/${id}`, { method: 'DELETE' });
+      await fetch(`https://brozento-backend.vercel.app/api/cities/${id}`, { method: 'DELETE' });
       fetchCities();
     }
   };
@@ -343,7 +343,7 @@ const AdminDashboard = () => {
   const handleAddCategory = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:5000/api/categories', {
+      const res = await fetch('https://brozento-backend.vercel.app/api/categories', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: catName, image: catImage }),
@@ -364,7 +364,7 @@ const AdminDashboard = () => {
 
   const handleDeleteCategory = async (id) => {
     if (window.confirm("Delete this category?")) {
-      await fetch(`http://localhost:5000/api/categories/${id}`, { method: 'DELETE' });
+      await fetch(`https://brozento-backend.vercel.app/api/categories/${id}`, { method: 'DELETE' });
       fetchCategories();
     }
   };
@@ -373,9 +373,9 @@ const AdminDashboard = () => {
     e.preventDefault();
     try {
       const method = editPageId ? 'PUT' : 'POST';
-      const url = editPageId 
-        ? `http://localhost:5000/api/pages/${editPageId}` 
-        : 'http://localhost:5000/api/pages';
+      const url = editPageId
+        ? `https://brozento-backend.vercel.app/api/pages/${editPageId}`
+        : 'https://brozento-backend.vercel.app/api/pages';
 
       const res = await fetch(url, {
         method: method,
@@ -398,7 +398,7 @@ const AdminDashboard = () => {
 
   const handleDeletePage = async (id) => {
     if (window.confirm("Delete this page?")) {
-      await fetch(`http://localhost:5000/api/pages/${id}`, { method: 'DELETE' });
+      await fetch(`https://brozento-backend.vercel.app/api/pages/${id}`, { method: 'DELETE' });
       fetchPages();
     }
   };
@@ -413,14 +413,14 @@ const AdminDashboard = () => {
 
   const handleDeleteMessage = async (id) => {
     if (window.confirm("Delete this message?")) {
-      await fetch(`http://localhost:5000/api/contact/${id}`, { method: 'DELETE' });
+      await fetch(`https://brozento-backend.vercel.app/api/contact/${id}`, { method: 'DELETE' });
       fetchMessages();
     }
   };
 
   const handleDeleteReview = async (id) => {
     if (window.confirm("Delete this review?")) {
-      await fetch(`http://localhost:5000/api/reviews/${id}`, { method: 'DELETE' });
+      await fetch(`https://brozento-backend.vercel.app/api/reviews/${id}`, { method: 'DELETE' });
       fetchReviews();
     }
   };
@@ -428,7 +428,7 @@ const AdminDashboard = () => {
   const handleUpdateSettings = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:5000/api/settings', {
+      const res = await fetch('https://brozento-backend.vercel.app/api/settings', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(siteSettings),
@@ -960,12 +960,12 @@ const AdminDashboard = () => {
                   <div>
                     <label className="block text-xs font-semibold text-gray-600 mb-1">Hero Image URLs (Comma Separated for Slider)</label>
                     <div className="flex gap-2 mb-2">
-                      <textarea 
-                        value={siteSettings.heroImages?.join(', ') || ''} 
-                        onChange={(e) => setSiteSettings({...siteSettings, heroImages: e.target.value.split(',').map(url => url.trim())})} 
+                      <textarea
+                        value={siteSettings.heroImages?.join(', ') || ''}
+                        onChange={(e) => setSiteSettings({...siteSettings, heroImages: e.target.value.split(',').map(url => url.trim())})}
                         rows="2"
-                        className="w-full px-3 py-2 border rounded" 
-                        placeholder="https://image1.jpg, https://image2.jpg" 
+                        className="w-full px-3 py-2 border rounded"
+                        placeholder="https://image1.jpg, https://image2.jpg"
                       />
                       <label className="bg-gray-200 px-3 py-2 rounded-lg cursor-pointer hover:bg-gray-300 flex items-center justify-center h-full">
                         <Upload size={18} />

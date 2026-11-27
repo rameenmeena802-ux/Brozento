@@ -19,7 +19,8 @@ const ProductDetail = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/products/${id}`);
+        const res = await fetch(`https://brozento-backend.vercel.app
+ Copy new URL/api/products/${id}`);
         const data = await res.json();
         setProduct(data);
         setLoading(false);
@@ -31,7 +32,8 @@ const ProductDetail = () => {
 
     const fetchReviews = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/reviews/${id}`);
+        const res = await fetch(`https://brozento-backend.vercel.app
+ Copy new URL/api/reviews/${id}`);
         const data = await res.json();
         setReviews(data);
       } catch (error) {
@@ -47,7 +49,8 @@ const ProductDetail = () => {
   const handleReviewSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:5000/api/reviews', {
+      const res = await fetch('https://brozento-backend.vercel.app
+ Copy new URL/api/reviews', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...newReview, productId: id }),
@@ -57,7 +60,8 @@ const ProductDetail = () => {
         setNewReview({ userName: '', rating: 5, comment: '' });
         
         // Reviews refresh karein
-        const reviewsRes = await fetch(`http://localhost:5000/api/reviews/${id}`);
+        const reviewsRes = await fetch(`https://brozento-backend.vercel.app
+ Copy new URL/api/reviews/${id}`);
         const reviewsData = await reviewsRes.json();
         setReviews(reviewsData);
       } else {

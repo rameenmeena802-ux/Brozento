@@ -39,7 +39,7 @@ function App() {
 
     const fetchPages = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/pages');
+        const res = await fetch('https://brozento-backend.vercel.app/api/pages');
         const data = await res.json();
         setPages(data);
       } catch (error) {

@@ -1,4 +1,5 @@
-const API_URL = 'http://localhost:5000/api';
+const API_URL = 'https://brozento-backend.vercel.app
+ Copy new URL/api';
 
 // Backend se products fetch karein
 export const getProducts = async () => {

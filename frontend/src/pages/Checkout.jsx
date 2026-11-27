@@ -29,7 +29,8 @@ const Checkout = () => {
   useEffect(() => {
     const fetchCities = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/cities');
+        const res = await fetch('https://brozento-backend.vercel.app
+ Copy new URLhttp:///api/cities');
         const data = await res.json();
         setCities(data);
       } catch (error) {
@@ -63,7 +64,8 @@ const Checkout = () => {
     formData.append('image', file);
     setUploading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/upload', {
+      const res = await fetch('https://brozento-backend.vercel.app
+ Copy new URL/api/upload', {
         method: 'POST',
         body: formData,
       });
@@ -118,7 +120,8 @@ const Checkout = () => {
     };
 
     try {
-      const res = await fetch('http://localhost:5000/api/orders', {
+      const res = await fetch('https://brozento-backend.vercel.app
+ Copy new URL/api/orders', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(orderData),
