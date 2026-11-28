@@ -11,7 +11,7 @@ const Checkout = () => {
   const [formData, setFormData] = useState({
     customerName: '',
     phone: '',
-    email: '', // YEH NAYA ADD HUA HAI
+    email: '',
     address: '',
     city: '',
   });
@@ -29,7 +29,7 @@ const Checkout = () => {
   useEffect(() => {
     const fetchCities = async () => {
       try {
-        const res = await fetch('https://brozento-backend.vercel.apphttp:///api/cities');
+        const res = await fetch('https://brozento-backend.vercel.app/api/cities');
         const data = await res.json();
         setCities(data);
       } catch (error) {
@@ -105,6 +105,7 @@ const Checkout = () => {
       items: cartItems.map(item => ({
         productId: item._id,
         title: item.title,
+        variantName: item.variantName || '',
         price: item.price,
         quantity: item.quantity,
         image: item.image
@@ -175,7 +176,6 @@ const Checkout = () => {
                 <input type="text" name="customerName" placeholder="Full Name" required value={formData.customerName} onChange={handleChange} className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-brozentoRed" />
                 <input type="text" name="phone" placeholder="Phone Number (03xx-xxxxxxx)" required value={formData.phone} onChange={handleChange} className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-brozentoRed" />
                 
-                {/* EMAIL FIELD - YEH NAYA ADD HUA HAI */}
                 <input type="email" name="email" placeholder="Email Address (for order confirmation)" required value={formData.email} onChange={handleChange} className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-brozentoRed md:col-span-2" />
                 
                 <div className="md:col-span-2">
@@ -210,7 +210,6 @@ const Checkout = () => {
                 ))}
               </div>
 
-              {/* Screenshot Upload Section */}
               <div className="bg-blue-50 p-4 rounded-lg border border-blue-200 mb-6">
                 <h3 className="text-lg font-bold text-blue-800 mb-2 flex items-center gap-2"><Upload size={20} /> Upload Payment Screenshot</h3>
                 <p className="text-sm text-blue-700 mb-3">Please transfer the amount to the selected account and upload the screenshot here.</p>
@@ -228,8 +227,8 @@ const Checkout = () => {
             <h2 className="text-xl font-bold mb-4 border-b pb-4">Your Order</h2>
             <div className="space-y-3 mb-4 max-h-60 overflow-y-auto">
               {cartItems.map((item) => (
-                <div key={item._id} className="flex justify-between text-sm">
-                  <span className="text-gray-600">{item.title} x {item.quantity}</span>
+                <div key={`${item._id}-${item.variantName}`} className="flex justify-between text-sm">
+                  <span className="text-gray-600">{item.title} {item.variantName ? `(${item.variantName})` : ''} x {item.quantity}</span>
                   <span className="font-semibold">Rs {item.price * item.quantity}</span>
                 </div>
               ))}
